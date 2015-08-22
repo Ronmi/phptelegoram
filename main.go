@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/tucnak/telebot"
@@ -30,7 +31,7 @@ func init() {
 	if err != nil {
 		log.Fatalf("Cannot read token from file[%s]: %s", tokenFile, err)
 	}
-	token = string(data)
+	token = strings.TrimSpace(string(data))
 
 	if workers < 1 {
 		flag.PrintDefaults()
