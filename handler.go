@@ -16,8 +16,9 @@ func handleMessages(ch chan telebot.Message) {
 		}
 		script := NewContext()
 		script.Startup()
-		script.Var("message", string(data))
-		_ = script.Exec(phpFile)
+		script.Var("message_json", string(data))
+		script.Var("entry_file", phpFile)
+		_ = script.Exec("lib.php")
 		script.Close()
 	}
 }

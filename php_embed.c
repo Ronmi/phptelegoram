@@ -9,28 +9,34 @@
 // ===== These lines are added by Ronmi Ren
 #include "_cgo_export.h"
 
-PHP_FUNCTION(send_message) {
+PHP_FUNCTION(raw_send_message) {
   long uid;
   char *msg;
   int msg_len;
-  GoString gostr;
+  char *opt;
+  int opt_len;
+  GoString gomsg;
+  GoString goopt;
   int argc = ZEND_NUM_ARGS();
 
-  if (zend_parse_parameters(argc TSRMLS_CC, "ls", &uid, &msg, &msg_len) == FAILURE)
+  if (zend_parse_parameters(argc TSRMLS_CC, "lss", &uid, &msg, &msg_len, &opt, &opt_len) == FAILURE)
     return;
 
-  gostr.p = msg;
-  gostr.n = msg_len;
-  SendMessage(uid, gostr);
+  gomsg.p = msg;
+  gomsg.n = msg_len;
+  goopt.p = opt;
+  goopt.n = opt_len;
+  SendMessage(uid, gomsg, goopt);
 }
 
 ZEND_BEGIN_ARG_INFO(arginfo_sm, 0)
 ZEND_ARG_INFO(0, uid)
 ZEND_ARG_INFO(0, msg)
+ZEND_ARG_INFO(0, opt)
 ZEND_END_ARG_INFO()
 
 static const zend_function_entry go_functions[] = {
-  ZEND_FE(send_message, arginfo_sm)
+  ZEND_FE(raw_send_message, arginfo_sm)
   {NULL, NULL, NULL}
 };
 
