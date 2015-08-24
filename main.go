@@ -18,10 +18,12 @@ var (
 	phpFile   string
 	bot       *telebot.Bot
 	opt       *telebot.SendOptions
+	iniFile   string
 )
 
 func init() {
 	opt = new(telebot.SendOptions)
+	flag.StringVar(&iniFile, "ini", "", "Specify php.ini path")
 	flag.StringVar(&tokenFile, "t", "token", "File contains bot token")
 	flag.StringVar(&phpFile, "php", "entry.php", "PHP entry file, you can access JSON encoded message data in $message")
 	flag.UintVar(&workers, "w", 1, "Run `N` goroutines to process message, must greater than 0")

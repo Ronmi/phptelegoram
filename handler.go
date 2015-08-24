@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"os"
 
 	"github.com/tucnak/telebot"
 )
@@ -15,6 +16,9 @@ func handleMessages(ch chan telebot.Message) {
 			continue
 		}
 		script := NewContext()
+		if _, err := os.Stat(iniFile); err == nil {
+			script.IniFile(iniFile)
+		}
 		script.Startup()
 		script.Var("message_json", string(data))
 		script.Var("entry_file", phpFile)
