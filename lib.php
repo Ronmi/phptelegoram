@@ -34,6 +34,10 @@ class Message {
     public function json() {
         return json_encode($this->data);
     }
+
+    public static function fromJson($json) {
+        return new self($json);
+    }
 }
 
 class SendOptions {
@@ -89,6 +93,15 @@ class SendOptions {
         $ret = json_encode($data);
         return $ret;
     }
+
+    public static function fromJson($json) {
+        $data = json_decode($json, true);
+        $ret = new self;
+        $ret->reply = json_encode($data['ReplyTo']);
+        $ret->markup = $data['ReplyMarkup'];
+        $ret->noPreview = $data['DisableWebPagePreview'];
+        return $ret;
+    }
 }
 
 function send_message($uid, $msg, SendOptions $options = null) {
@@ -98,5 +111,6 @@ function send_message($uid, $msg, SendOptions $options = null) {
     raw_send_message($uid, $msg, $options->json());
 }
 
-$message = new Message($message_json);
-require($entry_file);
+function timed_task($milisec, $data) {
+    raw_timed_task($milisec, json_encode($data));
+}

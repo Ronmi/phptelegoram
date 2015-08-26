@@ -11,6 +11,11 @@ import (
 	"github.com/tucnak/telebot"
 )
 
+type task struct {
+	nanosec int64
+	data    string
+}
+
 var (
 	tokenFile string
 	workers   uint
@@ -19,6 +24,7 @@ var (
 	bot       *telebot.Bot
 	opt       *telebot.SendOptions
 	iniFile   string
+	pipe      chan task
 )
 
 func init() {
@@ -48,12 +54,18 @@ func init() {
 	if err != nil {
 		log.Fatalf("Cannot start telebot: %s", err)
 	}
+
+	pipe = make(chan task)
 }
 
 func main() {
 	ch := make(chan telebot.Message)
 	bot.Listen(ch, 30*time.Second)
 
+	// handle timed task
+	go handleTask()
+
+	// message handler
 	for i := uint(1); i < workers; i++ {
 		go handleMessages(ch)
 	}

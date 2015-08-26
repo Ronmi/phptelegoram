@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 
 	"github.com/tucnak/telebot"
@@ -20,4 +21,11 @@ func SendMessage(uid int, msg string, options string) {
 	if err := bot.SendMessage(telebot.User{ID: uid}, msg, &real); err != nil {
 		log.Printf("Error sending message: %s", err)
 	}
+}
+
+//export TimedTask
+func TimedTask(milisec int, data string) {
+	var nanosec int64 = int64(milisec) * 1000000
+	d := fmt.Sprintf("%s", data)
+	pipe <- task{nanosec, d}
 }

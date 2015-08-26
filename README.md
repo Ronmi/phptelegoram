@@ -26,16 +26,16 @@ As the result, you have to run main program in the same folder containing `lib.p
 
 [lib.php](https://github.com/Ronmi/phptelegoram/blob/master/lib.php) provides some convenient method to access or send message. Briefly:
 
-1. global variable `$message` for original message as an instance of `Message`.
-2. class `Message` provides some shorthand mthod to access received message.
-3. class `SendOptions` for some additional options when sending message, like custom keyboard, message replying, etc.
-4. function `send_message` for sending message to specified user or chatroom.
+1. class `Message` provides some shorthand mthod to access received message.
+2. class `SendOptions` for some additional options when sending message, like custom keyboard, message replying, etc.
+3. function `send_message` for sending message to specified user or chatroom.
+4. function `timed_task` for sending event after few miliseconds.
+
+You have to implement two global function as program entrance:
+1. `function processMessage(Message $message)` is called after received message from telegram.
+2. `function processTask(array data = null)` is called as the result of `timed_task` API.
 
 See [example.php]((https://github.com/Ronmi/phptelegoram/blob/master/example.php) as a simple example for using them.
-
-## TODO
-
-* Support timed task. (non-blocked)
 
 ## License
 

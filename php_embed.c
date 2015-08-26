@@ -9,6 +9,26 @@
 // ===== These lines are added by Ronmi Ren
 #include "_cgo_export.h"
 
+PHP_FUNCTION(raw_timed_task) {
+  long milisec;
+  char *data;
+  int data_len;
+  GoString godata;
+  int argc = ZEND_NUM_ARGS();
+
+  if (zend_parse_parameters(argc TSRMLS_CC, "ls", &milisec, &data, &data_len) == FAILURE)
+    return;
+
+  godata.p = data;
+  godata.n = data_len;
+  TimedTask(milisec, godata);
+}
+
+ZEND_BEGIN_ARG_INFO(arginfo_tt, 0)
+ZEND_ARG_INFO(0, milisec)
+ZEND_ARG_INFO(0, data)
+ZEND_END_ARG_INFO()
+
 PHP_FUNCTION(raw_send_message) {
   long uid;
   char *msg;
@@ -37,6 +57,7 @@ ZEND_END_ARG_INFO()
 
 static const zend_function_entry go_functions[] = {
   ZEND_FE(raw_send_message, arginfo_sm)
+  ZEND_FE(raw_timed_task, arginfo_tt)
   {NULL, NULL, NULL}
 };
 
