@@ -35,10 +35,10 @@ You have to implement two global function as program entrance:
 1. `function processMessage(Message $message)` is called after received message from telegram.
 2. `function processTask(array data = null)` is called as the result of `timed_task` API.
 
-See [example.php]((https://github.com/Ronmi/phptelegoram/blob/master/example.php) as a simple example for using them.
+See [example.php](https://github.com/Ronmi/phptelegoram/blob/master/example.php) as a simple example for using them.
 
 ## License
 
-Most lines in `php_embed.c` is forked from [Xing Xing's GoEmPHP](https://github.com/mikespook/goemphp), see the original project page for detailed license information.
+Most lines in `php_embed.c` and `php.go` is forked from [Xing Xing's GoEmPHP](https://github.com/mikespook/goemphp), see the original project page for detailed license information.
 
 You can choose ANY VERSION of MIT or GPL for the codes written by me.
